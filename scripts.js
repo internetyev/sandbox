@@ -8,6 +8,10 @@ logo.src = 'logo.png';
 const container = document.createElement('div');
 container.setAttribute('class', 'container');
 
+const apiendpoint = 'https://kiwicom-prod.apigee.net/';
+// const apiendpoint = 'https://api.skypicker.com/';
+
+
 header.appendChild(logo);
 app.appendChild(container);
 
@@ -40,7 +44,7 @@ var locationsapicall = '?term=' + airport + '&locale=' + locale + '&location_typ
 console.log(locationsapicall);
 var request = new XMLHttpRequest();
 // request.open('GET', 'https://api.skypicker.com/locations?term=PRG&locale=en-US&location_types=airport&limit=10&active_only=true&sort=name', true);
-request.open('GET', 'https://api.skypicker.com/locations'+locationsapicall, true);
+request.open('GET', apiendpoint+'/locations'+locationsapicall, true);
 request.onload = function () {
 
   // Begin accessing JSON data here
