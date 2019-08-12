@@ -1,3 +1,8 @@
+
+
+// import {kiwiapikey} from '.env';
+console.log(kiwiapikey);
+
 const app = document.getElementById('results');
 
 const header = document.getElementById('header');

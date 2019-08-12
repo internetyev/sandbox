@@ -1,3 +1,6 @@
+console.log(kiwiapikey);
+debugger;
+
 const app = document.getElementById('results');
 
 const header = document.getElementById('header');
@@ -43,8 +46,19 @@ document.getElementById("entrydata").innerHTML = 'Airports: ' + airports
 var locationsapicall = '?term=' + airport + '&locale=' + locale + '&location_types=' + locationtypes + '&limit=' + airports + '&active_only=true&sort=name';
 console.log(locationsapicall);
 var request = new XMLHttpRequest();
-// request.open('GET', 'https://api.skypicker.com/locations?term=PRG&locale=en-US&location_types=airport&limit=10&active_only=true&sort=name', true);
-request.open('GET', apiendpoint+'/locations'+locationsapicall, true);
+
+// ***  FOR API.SKYPICKER ***
+request.open('GET', 'https://api.skypicker.com/locations/query?term=PRG&locale=en-US&location_types=airport&limit=10&active_only=true&sort=name&partner=picky', true);
+// request.setRequestHeader("Content-type", "application/json");
+// request.setRequestHeader('apikey', kiwiapikey);
+
+// *** FOR TEQUILA *** 
+// request.open('GET', apiendpoint+'/locations'+locationsapicall, true);
+// request.setRequestHeader("Content-type", "application/json");
+// request.setRequestHeader('apikey', kiwiapikey);
+
+
+// curl -X GET "https://kiwicom-prod.apigee.net/locations/query?term=PRG&locale=en-US&location_types=airport&limit=10&active_only=true" -H "accept: application/json" -H "apikey: 6oXV63jo5UxlVhrZGsU4OzWjG27tDoDf"
 request.onload = function () {
 
   // Begin accessing JSON data here
