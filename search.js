@@ -12,27 +12,47 @@ logo.src = 'logo.png';
 
 const container = document.createElement('div');
 container.setAttribute('class', 'container');
-
 header.appendChild(logo);
 app.appendChild(container);
 
-//LOCATIONS
 
-var airports = 10;
-var airport = 'Kyiv';
+//SEARCH
+
+var apiendpoint = 'https://kiwicom-prod.apigee.net/v2/search'
+var fly_from = 'city:FRA';
+var fly_to = 'city:HND';
+var date_from = '10/09/2019';
+var date_to = '10/09/2019';
+var return_from = '5/10/2019';
+var return_to = '5/10/2019';
 var locale = 'en-US';
-var locationtypes = 'airport';
+var flight_type= 'round';
+var currency = 'EUR';
+var sort = 'price';
 
-document.getElementById("entrydata").innerHTML = 'Airports: ' + airports 
-        + '<br>airport: ' + airport 
+document.getElementById("entrydata").innerHTML = 'From: ' + fly_from
+        + '<br>To: ' + fly_to
         + '<br>locale: ' + locale
-        + '<br>locationtypes: ' + airport; 
+        + '<br>dates: ' + date_from + '..' + date_to + ' -- ' + return_from + '..' + return_to 
+        + '<br>flight type:' + flight_type
+        + '<br>sort:' + sort; 
 
-var locationsapicall = '?term=' + airport + '&locale=' + locale + '&location_types=' + locationtypes + '&limit=' + airports + '&active_only=true&sort=name';
-console.log(locationsapicall);
+var searchapicall = '?fly_from=' + fly_from + '&fly_to=' + fly_to +'&locale=' + locale 
+                + '&date_from=' + date_from + '&date_to=' + date_to
+                + '&return_from=' + return_from + '&return_to=' + return_to
+                + '&flight_type=' + flight_type
+                + '&curr=' + currency +
+                + '&sort=' + sort;
+console.log(apiendpoint+searchapicall);
 var request = new XMLHttpRequest();
 // request.open('GET', 'https://api.skypicker.com/locations?term=PRG&locale=en-US&location_types=airport&limit=10&active_only=true&sort=name', true);
-request.open('GET', 'https://api.skypicker.com/locations'+locationsapicall, true);
+
+// *** FOR TEQUILA *** 
+request.open('GET', apiendpoint+searchapicall, true);
+request.setRequestHeader("Content-type", "application/json");
+request.setRequestHeader('apikey', kiwiapikey);
+
+
 request.onload = function () {
 
   // Begin accessing JSON data here
@@ -40,19 +60,20 @@ request.onload = function () {
   console.log(data);
   if (request.status >= 200 && request.status < 400) {
     // debugger;
-  var allairports = data.locations.length;
-  console.log(allairports);
-  for (var i = 0; i < allairports; i++) {
-    console.log(data.locations[i].id);
-    const card = document.createElement('div');
-    card.setAttribute('class', 'card');
-    const h1 = document.createElement('h1');
-    h1.textContent = "airport: " + data.locations[i].id + ", " + data.locations[i].city.name;
-    container.appendChild(card);
-    card.appendChild(h1);
-    const p = document.createElement('p');
-    p.textContent = `${data.locations[i].name}, ${data.locations[i].dst_popularity_score}`;
-    card.appendChild(p);
+  var allresults = data.data.length;
+  for (var i = 0; i < allresults; i++) {
+    console.log(data.data[i].flyFrom + ' - ' + data.data[i].flyTo +  ' | ' + data.data[i].price + currency);
+    const line = document.createElement('div');
+    line.setAttribute('class', 'longlist');
+    var fullroute = data.data[i].flyFrom;
+    var routelength = data.data[i].route.length; 
+    for (var j = 0; j < routelength; j++) {
+      fullroute = fullroute + '-' + data.data[i].route[j].flyTo;
+    }
+    const div = document.createElement('p');
+    div.textContent = fullroute + '  ' + data.data[i].price + currency;
+    div.class 
+    container.appendChild(p);
     }
 
   //   data.forEach(id => {

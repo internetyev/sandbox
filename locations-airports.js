@@ -12,8 +12,10 @@ container.setAttribute('class', 'container');
 const apiendpoint = 'https://kiwicom-prod.apigee.net/';
 // const apiendpoint = 'https://api.skypicker.com/';
 
+
 header.appendChild(logo);
 app.appendChild(container);
+
 
 // const app = document.getElementById('root');
 
@@ -29,23 +31,19 @@ app.appendChild(container);
 //LOCATIONS
 
 var airports = 10;
-var term = 'Brno';
+var airport = 'Valencia';
 var locale = 'en-US';
 var locationtypes0 = 'airport';
-// var locationtypes1 = '';
-// var locationtypes2 = '';
+var locationtypes1 = '';
+var locationtypes2 = '';
 
 
 document.getElementById("entrydata").innerHTML = 'Airports: ' + airports 
-        + '<br>term: ' + term 
+        + '<br>airport: ' + airport 
         + '<br>locale: ' + locale
-        + '<br>locationtypes: ' + locationtypes0;
-        // + ", " + locationtypes1
-        //  + ", " + locationtypes2; 
+        + '<br>locationtypes: ' + locationtypes0 + ", " + locationtypes1 + ", " + locationtypes2; 
 
-var locationsapicall = apiendpoint + 'locations/query?term=' + term + '&locale=' + locale + '&location_types=' + locationtypes0 +'&limit=' + airports + '&active_only=true';
-// +'&location_types=' +  locationtypes1 + '&location_types=' +  locationtypes2 
-
+var locationsapicall = apiendpoint + 'locations/query?term=' + airport + '&locale=' + locale + '&location_types=' + locationtypes0 +'&location_types=' +  locationtypes1 + '&location_types=' +  locationtypes2 +'&limit=' + airports + '&active_only=true&sort=name';
 console.log(locationsapicall);
 var request = new XMLHttpRequest();
 
@@ -72,8 +70,8 @@ request.onload = function () {
     const card = document.createElement('div');
     card.setAttribute('class', 'card');
     const h1 = document.createElement('h1');
-    if (data.locations[i].type = "city") {
-      h1.textContent = "city: "+data.locations[i].name;
+    if (data.locations[i].type = "airport") {
+      h1.textContent = "airport: "+data.locations[i].name+"("+data.locations[i].code+"), "+data.locations[i].city.country.name;
       console.log(h1.textContent);
       // } 
       // else { 
@@ -84,12 +82,6 @@ request.onload = function () {
       //     h1.textContent = data.locations[i].name;
       //   } 
       };
-      if (data.locations[i].type = "airport") {
-        debugger;
-        h1.textContent = "airport: "+data.locations[i].name+", ";
-        console.log(h1.textContent);
-      };
-  
     container.appendChild(card);
     card.appendChild(h1);
     const p = document.createElement('p');

@@ -32,8 +32,11 @@ img {
 }
 
 p {
-  padding: 0 2.5rem 2.5rem;
+  display: block;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  text-align: justify;
 }
 
 .container {
