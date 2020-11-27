@@ -46,15 +46,39 @@ document.getElementById("entrydata").innerHTML = 'Airports: ' + airports
 var locationsapicall = apiendpoint + 'locations/query?term=' + term + '&locale=' + locale + '&location_types=' + locationtypes0 +'&limit=' + airports + '&active_only=true';
 // +'&location_types=' +  locationtypes1 + '&location_types=' +  locationtypes2 
 
+//load json
 
+var getJSON = function(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status === 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status, xhr.response);
+      }
+    };
+    xhr.send();
+};
 // load all SEM routes
+
 
 var semrouteslist = 'https://r-albert-price-ranker.skypicker.com/albert-routes';
 
-$.getJSON(semrouteslist, function(semroutesrequest) {
-    // JSON result in `data` variable
+getJSON(semrouteslist,
+function(err, semroutes) {
+  if (err !== null) {
+    alert('Something went wrong: ' + err);
+  } else {
+    console.log('list of routes: ' + semroutes);
+  }
 });
-console.log(semroutesrequest);
+
+
+
+console.log(semroutes);
 
 //-----
 
