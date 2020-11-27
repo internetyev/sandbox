@@ -51,9 +51,7 @@ var locationsapicall = apiendpoint + 'locations/query?term=' + term + '&locale='
 
 var semrouteslist = 'https://r-albert-price-ranker.skypicker.com/albert-routes';
 
-var semroutesrequest = new XMLHttpRequest();
-
-$.getJSON(semrouteslist, function(data) {
+$.getJSON(semrouteslist, function(semroutesrequest) {
     // JSON result in `data` variable
 });
 console.log(semroutesrequest);
