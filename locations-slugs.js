@@ -53,9 +53,9 @@ var semrouteslist = 'https://r-albert-price-ranker.skypicker.com/albert-routes';
 
 var semroutesrequest = new XMLHttpRequest();
 
-request.open('GET',semrouteslist,true);
-request.setRequestHeader("Content-type","application/json");
-
+$.getJSON(semrouteslist, function(data) {
+    // JSON result in `data` variable
+});
 console.log(semroutesrequest);
 
 //-----
